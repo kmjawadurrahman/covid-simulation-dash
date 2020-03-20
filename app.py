@@ -6,49 +6,68 @@ from dash.dependencies import Input, Output, State
 import dash_table
 import pandas as pd
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['https://codepen.io/kmjawadurrahman/pen/KxVwzo.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
-    html.Div('Total deaths as of today:'),
-    dcc.Input(
-            id="total-deaths", type="number",
-            debounce=False, value=1, min=1, max=100000
+    html.Div([
+        html.Div('Total deaths as of today:',
+                style={'margin-bottom': 3, 'font-weight': 'bold'}),
+        dcc.Input(
+                id="total-deaths", type="number",
+                debounce=False, value=1, min=1, max=100000
+            ),
+        html.Div('Fatality rate (%):',
+                style={'margin-bottom': 3, 'margin-top': 15,
+                    'font-weight': 'bold'}),
+        dcc.Input(
+                id="fatality-rate", type="number",
+                debounce=False, value=2, min=0.1, max=100
+            ),
+        html.Div('Days from infection to death:',
+                style={'margin-bottom': 3, 'margin-top': 15,
+                    'font-weight': 'bold'}),
+        dcc.Input(
+                id="days-death", type="number",
+                debounce=False, value=17.3, min=1, max=100
+            ),
+        html.Div('Case doubling time in days:',
+                style={'margin-bottom': 3, 'margin-top': 15,
+                    'font-weight': 'bold'}),
+        dcc.Input(
+                id="doubling-time", type="number",
+                debounce=False, value=6.18, min=1, max=50
+            )], className="two columns",
         ),
-    html.Div('Fatality rate (%):'),
-    dcc.Input(
-            id="fatality-rate", type="number",
-            debounce=False, value=2, min=0.1, max=100
-        ),
-    html.Div('Days from infection to death:'),
-    dcc.Input(
-            id="days-death", type="number",
-            debounce=False, value=17.3, min=1, max=100
-        ),
-    html.Div('Case doubling time in days:'),
-    dcc.Input(
-            id="doubling-time", type="number",
-            debounce=False, value=6.18, min=1, max=50
-        ),
-    html.Div('Number of vacant hospital beds available:'),
-    dcc.Input(
-            id="num-beds", type="number",
-            debounce=False, value=50000, min=50, max=1000000
-        ),
-    html.Div('Number of ICUs available:'),
-    dcc.Input(
-            id="num-icus", type="number",
-            debounce=False, value=10000, min=1, max=500000
-        ),
-    html.Div('Number of ventilators available:'),
-    dcc.Input(
-            id="num-ventilators", type="number",
-            debounce=False, value=2000, min=1, max=100000
-        ),
-    html.Button(id='submit-button', n_clicks=0, children='Run Simulation'),
-    html.Div(id='datatable-div'),
-])
+    html.Div([
+        html.Div('No. of vacant beds available:',
+                style={'margin-bottom': 3, 'font-weight': 'bold'}),
+        dcc.Input(
+                id="num-beds", type="number",
+                debounce=False, value=50000, min=50, max=1000000
+            ),
+        html.Div('No. of ICUs available:',
+                style={'margin-bottom': 3, 'margin-top': 15,
+                    'font-weight': 'bold'}),
+        dcc.Input(
+                id="num-icus", type="number",
+                debounce=False, value=10000, min=1, max=500000
+            ),
+        html.Div('No. of ventilators available:',
+                style={'margin-bottom': 3, 'margin-top': 15,
+                    'font-weight': 'bold'}),
+        html.Div(
+            dcc.Input(
+                    id="num-ventilators", type="number",
+                    debounce=False, value=2000, min=1, max=100000
+                ), style={'margin-bottom': 40}),
+        html.Button(id='submit-button', n_clicks=0, children='Run Simulation',
+                style={'margin-bottom': 20}),
+        ], className="two columns",
+    ),
+    html.Div(id='datatable-div', className="seven columns",)
+], className='ten columns offset-by-one', style={'margin-top': 50, 'margin-bottom': 100})
 
 @app.callback(
     Output('datatable-div', 'children'),
@@ -68,9 +87,13 @@ def update_calc_table(n_clicks, total_deaths, fatality_rate,
     likely_new_cases_ina_week = likely_true_cases_ina_week - true_cases_today
     return dash_table.DataTable(
                 id='table',
+                style_as_list_view=True,
                 style_header={
-                    'fontWeight': 'bold'
+                    'backgroundColor': 'white',
+                    'fontWeight': 'bold',
+                    'font-size': 16,
                 },
+                style_cell={'font-size': 14},
                 columns=[{"name": i, "id": i} for i in ['Calculated metric names', 'Calculated metric values']],
                 data=[{'Calculated metric names': 'Number of cases that caused the deaths',
                         'Calculated metric values': number_cases_causing_death},
