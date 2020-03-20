@@ -8,7 +8,7 @@ import dash_table
 import pandas as pd
 import plotly.graph_objects as go
 
-external_stylesheets = ['https://codepen.io/kmjawadurrahman/pen/KxVwzo.css']
+external_stylesheets = ['https://storage.googleapis.com/sql_database_towhid/dash.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
