@@ -145,6 +145,7 @@ def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
     fig.update_layout(title=chart_title,
                    yaxis_title=bar_name,
                    legend=dict(x=0.01, y=1.15), legend_orientation='h',
+                   transition={'duration': 1000},
                    annotations=annotations)
     return fig
 
@@ -232,7 +233,8 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
         )
     )
     fig1.update_layout(title='Estimation of true number of cases over time',
-                   yaxis_title='Estimated true number of cases')
+                   yaxis_title='Estimated true number of cases',
+                   transition={'duration': 1000})
 
     fig2 = plot_barline_combo(0.2, true_cases_list, dates_list, num_beds,
                             'Estimated number of hospitalizations needed',
