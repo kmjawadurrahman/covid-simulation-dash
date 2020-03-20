@@ -11,6 +11,7 @@ import plotly.graph_objects as go
 external_stylesheets = ['https://codepen.io/kmjawadurrahman/pen/KxVwzo.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 app.layout = html.Div([
     html.Div([
