@@ -70,7 +70,7 @@ app.layout = html.Div([
                 dcc.Input(
                         id="pct-icu", type="number",
                         debounce=False, value=5, min=0.5, max=20),
-                html.Div('% of cases requiring hospitalization:',
+                html.Div('% of cases requiring ventilator:',
                         style={'margin-bottom': 3, 'margin-top': 15,
                             'font-weight': 'bold'}),
                 dcc.Input(
@@ -290,7 +290,7 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
     fig4, date_crossed4 = plot_barline_combo(pct_ventilator/100, true_cases_list, dates_list, num_ventilators,
                             'Estimated number of ventilators needed',
                             'Ventilators capacity',
-                            'Estimation of number of cases requiring Ventilators<br>(assuming on average 1% require ventilators<br>10 days after infection)')
+                            'Estimation of number of cases requiring ventilators<br>(assuming on average 1% require ventilators<br>10 days after infection)')
 
     html_div_children = [
         html.Div([
