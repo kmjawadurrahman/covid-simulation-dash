@@ -90,9 +90,10 @@ app.layout = html.Div([
                 ], className='row', style=dict(fontSize=14)),
         ], className='two columns'),
         html.Div([
-            html.Div([
-                html.Div(id='barcharts-div')
-            ], className='row')
+            dcc.Loading(
+                html.Div([
+                    html.Div(id='barcharts-div')
+                ], className='row')),
         ], className='nine columns'),
     ], className='row'),
     html.Div([
