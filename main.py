@@ -280,17 +280,17 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
     fig2, date_crossed2 = plot_barline_combo(pct_hospitalization/100, true_cases_list, dates_list, num_beds,
                             'Estimated number of hospitalizations needed',
                             'Hospital beds capacity',
-                            'Estimation of number of cases requiring hospitalization<br>(assuming on average 20% require hospitalization<br>10 days after infection)')
+                            'Estimation of number of cases requiring hospitalization<br>(assuming on average {}% require hospitalization<br>10 days after infection)'.format(pct_hospitalization))
 
     fig3, date_crossed3 = plot_barline_combo(pct_icu/100, true_cases_list, dates_list, num_icus,
                             'Estimated number of ICUs needed',
                             'ICU capacity',
-                            'Estimation of number of cases requiring ICUs<br>(assuming on average 5% require ICU<br>10 days after infection)')
+                            'Estimation of number of cases requiring ICUs<br>(assuming on average {}% require ICU<br>10 days after infection)'.format(pct_icu))
 
     fig4, date_crossed4 = plot_barline_combo(pct_ventilator/100, true_cases_list, dates_list, num_ventilators,
                             'Estimated number of ventilators needed',
                             'Ventilators capacity',
-                            'Estimation of number of cases requiring ventilators<br>(assuming on average 1% require ventilators<br>10 days after infection)')
+                            'Estimation of number of cases requiring ventilators<br>(assuming on average {}% require ventilators<br>10 days after infection)'.format(pct_ventilator))
 
     html_div_children = [
         html.Div([
