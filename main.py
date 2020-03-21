@@ -17,87 +17,104 @@ server = app.server
 app.layout = html.Div([
     html.Div([
         html.Div([
-            html.Div('Total deaths as of today:',
-                    style={'margin-bottom': 3, 'font-weight': 'bold'}),
-            dcc.Input(
-                    id="total-deaths", type="number",
-                    debounce=False, value=1, min=1, max=100000
-                ),
-            html.Div('Fatality rate (%):',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            dcc.Input(
-                    id="fatality-rate", type="number",
-                    debounce=False, value=2, min=0.1, max=100
-                ),
-            html.Div('Days from infection to death:',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            dcc.Input(
-                    id="days-death", type="number",
-                    debounce=False, value=17.3, min=1, max=100
-                ),
-            html.Div('Case doubling time in days:',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            dcc.Input(
-                    id="doubling-time", type="number",
-                    debounce=False, value=6.18, min=1, max=50
-                )], className="two columns",
-            ),
-        html.Div([
-            html.Div('Hospital beds capacity:',
-                    style={'margin-bottom': 3, 'font-weight': 'bold'}),
-            dcc.Input(
-                    id="num-beds", type="number",
-                    debounce=False, value=50000, min=50, max=1000000
-                ),
-            html.Div('ICU capacity:',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            dcc.Input(
-                    id="num-icus", type="number",
-                    debounce=False, value=5000, min=1, max=500000
-                ),
-            html.Div('Ventilators capacity:',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            dcc.Input(
-                    id="num-ventilators", type="number",
-                    debounce=False, value=500, min=1, max=100000
-                ),
-            html.Div('Simulate for next N days:',
-                    style={'margin-bottom': 3, 'margin-top': 15,
-                        'font-weight': 'bold'}),
-            html.Div(
+            html.Div([
+                html.Div('Total deaths as of today:',
+                        style={'margin-bottom': 3, 'font-weight': 'bold'}),
                 dcc.Input(
-                        id="sim-days", type="number",
-                        debounce=False, value=30, min=3, max=90
-                    ), style={'margin-bottom': 20}),
-            html.Button(id='submit-button', n_clicks=0, children='Run Simulation',
-                    style={'margin-bottom': 0}),
-            ], className="two columns",
-        ),
-        html.Div(id='datatable-div', className="seven columns")
+                        id="total-deaths", type="number",
+                        debounce=False, value=1, min=1, max=100000),
+                html.Div('Fatality rate (%):',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="fatality-rate", type="number",
+                        debounce=False, value=2, min=0.1, max=100),
+                html.Div('Days from infection to death:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="days-death", type="number",
+                        debounce=False, value=17.3, min=1, max=100),
+                html.Div('Case doubling time in days:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="doubling-time", type="number",
+                        debounce=False, value=6.18, min=1, max=50),
+                html.Div('Hospital beds capacity:',
+                        style={'margin-bottom': 3, 'font-weight': 'bold'}),
+                dcc.Input(
+                        id="num-beds", type="number",
+                        debounce=False, value=50000, min=50, max=1000000),
+                html.Div('ICU capacity:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="num-icus", type="number",
+                        debounce=False, value=5000, min=1, max=500000),
+                html.Div('Ventilators capacity:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="num-ventilators", type="number",
+                        debounce=False, value=500, min=1, max=100000),
+                html.Div('% of cases requiring hospitalization:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="pct-hospitalization", type="number",
+                        debounce=False, value=20, min=1, max=50),
+                html.Div('% of cases requiring ICU:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="pct-icu", type="number",
+                        debounce=False, value=5, min=0.5, max=20),
+                html.Div('% of cases requiring hospitalization:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                dcc.Input(
+                        id="pct-ventilator", type="number",
+                        debounce=False, value=1, min=0.1, max=10),
+                html.Div('Simulate for next N days:',
+                        style={'margin-bottom': 3, 'margin-top': 15,
+                            'font-weight': 'bold'}),
+                html.Div(
+                    dcc.Input(
+                            id="sim-days", type="number",
+                            debounce=False, value=30, min=3, max=90
+                    ), style={'margin-bottom': 30}),
+                html.Button(id='submit-button', n_clicks=0, children='Run Simulation',
+                        style={'margin-bottom': 0}),
+                ], className='row', style=dict(fontSize=14)),
+        ], className='two columns'),
+        html.Div([
+            html.Div([
+                html.Div(id='barcharts-div')
+            ], className='row')
+        ], className='nine columns'),
     ], className='row'),
     html.Div([
-        html.Div(id='barcharts-div')
-    ], className='row'),
-    html.Div([
-        dcc.Markdown('''
-        ###### Notes:
-        - This simulation is based on the analysis done in this article: [Link to article](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca)
-        - It is known that there is a lag time before an infection gets reported as a confirmed case. So, a simulation model based on total number of deaths at present, fatality rate, days from infection to death, and case doubling rate has been used to estimate the actual true cases at present day.
-        - Number of cases that caused the deaths = Total deaths as of today / (Fatality rate (in %) / 100)
-        - Number of times cases have doubled = Days from infection to death / Case doubling time
-        - True cases today = Number of cases that caused the deaths \* 2^(Number of times cases have doubled)
-        - True cases on Nth day from today = True cases today \* 2^(Nth day number / Number of times cases have doubled)
-        - The default values of fatality rate, days from infection to death, and case doubling rate are sensible defaults determined by studies on actual data (more details in the article linked above), but feel free to tweak these values as well.
-        - Number of cases requiring hospitalizations, ICUs, ventilators have been adjusted by subtracting number of new cases from 10 days prior to account for cases that leave the hospital either due to recovery or death.
-        - Note that this is a very simple model that makes a lot of assumptions. Also, this model only shows the outbreak scenarios without accounting for containment, mitigation or other phases of intervention. Hence, the graphs only show infinitely increasing trends. However, this simulation (especially for N<=30 days) gives you an idea about how and when your hospital capacities might be pushed to their limits.
-        ''')
-    ], className='row'),
-], className='ten columns offset-by-one', style={'margin-top': 50, 'margin-bottom': 100})
+        html.Div([
+            html.Div(id='datatable-div')
+        ], className='five columns'),
+        html.Div([
+            dcc.Markdown('''
+            ###### Notes:
+            - This simulation is based on the analysis done in this article: [Link to article](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca)
+            - It is known that there is a lag time before an infection gets reported as a confirmed case. So, a simulation model based on total number of deaths at present, fatality rate, days from infection to death, and case doubling rate has been used to estimate the actual true cases at present day.
+            - Number of cases that caused the deaths = Total deaths as of today / (Fatality rate (in %) / 100)
+            - Number of times cases have doubled = Days from infection to death / Case doubling time
+            - True cases today = Number of cases that caused the deaths \* 2^(Number of times cases have doubled)
+            - True cases on Nth day from today = True cases today \* 2^(Nth day number / Number of times cases have doubled)
+            - The default values of fatality rate, days from infection to death, and case doubling rate are sensible defaults determined by studies on actual data (more details in the article linked above), but feel free to tweak these values as well.
+            - Number of cases requiring hospitalizations, ICUs, ventilators have been adjusted by subtracting number of new cases from 10 days prior to account for cases that leave the hospital either due to recovery or death.
+            - Note that this is a very simple model that makes a lot of assumptions. Also, this model only shows the outbreak scenarios without accounting for containment, mitigation or other phases of intervention. Hence, the graphs only show infinitely increasing trends. However, this simulation (especially for N<=30 days) gives you an idea about how and when your hospital capacities might be pushed to their limits.
+            ''')
+        ], className='six columns', style={'margin-left': '5%'}),
+    ], className='row', style={'margin-top': 20}),
+], className='eleven columns', style={'margin-top': 50, 'margin-bottom': 100,
+    'margin-left': '7.5%'})
 
 def calc_metrics(total_deaths, fatality_rate, days_death, doubling_time):
     number_cases_causing_death = round(total_deaths / (fatality_rate/100))
@@ -117,7 +134,7 @@ def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
     num_cases_arr[10:] = num_cases_arr[10:] - num_new_cases_arr[:-10]
     bar_colors_list = ['#636efa' for _ in range(len(lag_dates_list))]
     crossed_indicator = False
-    date_crossed = ""
+    date_crossed = "-"
     for bar_idx in range(len(lag_dates_list)):
         if num_cases_arr[bar_idx] > num_capacity:
             bar_colors_list[bar_idx] = '#db1313'
@@ -142,25 +159,25 @@ def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
         )
     )
     annotations = []
-    annotations.append(dict(xref='paper', x=0.23, y=num_capacity,
+    annotations.append(dict(xref='paper', x=0.65, y=num_capacity,
                                   xanchor='right', yanchor='bottom',
                                   text='{} = {}'.format(line_name, num_capacity),
                                   font=dict(family='Arial',
-                                            size=16),
+                                            size=12),
                                   showarrow=False))
-    annotations.append(dict(xref='paper', x=0.60, y=0,
-                                  xanchor='right', yanchor='top',
-                                  text='{} likely to hit limit on: {}'.format(line_name, str(date_crossed)),
-                                  font=dict(family='Arial',
-                                            size=16,
-                                            color='red'),
-                                  showarrow=False))
-    fig.update_layout(title=chart_title,
-                   yaxis_title=bar_name,
-                   legend=dict(x=0.01, y=1.15), legend_orientation='h',
-                   transition={'duration': 1000},
-                   annotations=annotations)
-    return fig
+    fig.update_layout(title={
+                        'text': '<b>{}</b>'.format(chart_title),
+                        'y':0.9,
+                        'x':0.5,
+                        'xanchor': 'center',
+                        'yanchor': 'top',
+                        'font': {'size': 12}},
+                   yaxis_title={'text': bar_name, 'font': {'size': 12}},
+                   transition=dict(duration=1000),
+                   showlegend=False,
+                   annotations=annotations,
+                   margin=dict(l=50,r=30,b=50,t=90))
+    return fig, date_crossed
 
 @app.callback(
     Output('datatable-div', 'children'),
@@ -185,16 +202,16 @@ def update_calc_table(n_clicks, total_deaths, fatality_rate,
                 style_header={
                     'backgroundColor': 'white',
                     'fontWeight': 'bold',
-                    'font-size': 16,
+                    'font-size': 12,
                 },
-                style_cell={'font-size': 14},
+                style_cell={'font-size': 12},
                 columns=[{"name": i, "id": i} for i in ['Calculated metric names', 'Calculated metric values']],
                 style_data_conditional=[
                     {
                         'if': {
                             'column_id': 'Calculated metric values',
                         },
-                        'font-size': 20,
+                        'font-size': 16,
                     }],
                 data=[{'Calculated metric names': 'Number of cases that caused the deaths',
                         'Calculated metric values': number_cases_causing_death},
@@ -245,29 +262,78 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
             mode='lines+markers'
         )
     )
-    fig1.update_layout(title='Estimation of true number of cases over time',
-                   yaxis_title='Estimated true number of cases',
-                   transition={'duration': 1000})
+    fig1.update_layout(title={
+                        'text': '<b>Estimation of true number of cases over time</b>',
+                        'y':0.9,
+                        'x':0.5,
+                        'xanchor': 'center',
+                        'yanchor': 'top',
+                        'font': {'size': 12}},
+                   yaxis_title={'text': 'Estimated true number of cases', 'font': {'size': 12}},
+                   transition={'duration': 1000},
+                   margin=dict(l=50,r=30,b=50,t=90))
 
-    fig2 = plot_barline_combo(0.2, true_cases_list, dates_list, num_beds,
+    fig2, date_crossed2 = plot_barline_combo(0.2, true_cases_list, dates_list, num_beds,
                             'Estimated number of hospitalizations needed',
                             'Hospital beds capacity',
-                            'Estimation of number of cases requiring hospitalization (assuming on average 20% require hospitalization 10 days after infection)')
+                            'Estimation of number of cases requiring hospitalization<br>(assuming on average 20% require hospitalization<br>10 days after infection)')
 
-    fig3 = plot_barline_combo(0.05, true_cases_list, dates_list, num_icus,
+    fig3, date_crossed3 = plot_barline_combo(0.05, true_cases_list, dates_list, num_icus,
                             'Estimated number of ICUs needed',
                             'ICU capacity',
-                            'Estimation of number of cases requiring ICUs (assuming on average 5% require ICU 10 days after infection)')
+                            'Estimation of number of cases requiring ICUs<br>(assuming on average 5% require ICU<br>10 days after infection)')
 
-    fig4 = plot_barline_combo(0.01, true_cases_list, dates_list, num_ventilators,
+    fig4, date_crossed4 = plot_barline_combo(0.01, true_cases_list, dates_list, num_ventilators,
                             'Estimated number of ventilators needed',
                             'Ventilators capacity',
-                            'Estimation of number of cases requiring Ventilators (assuming on average 1% require ventilators 10 days after infection)')
+                            'Estimation of number of cases requiring Ventilators<br>(assuming on average 1% require ventilators<br>10 days after infection)')
 
-    return html.Div([dcc.Graph(figure=fig1, id='totals-estimate', config={"displayModeBar": False}),
-                     dcc.Graph(figure=fig2, id='hospitalizations-estimate', config={"displayModeBar": False}),
-                     dcc.Graph(figure=fig3, id='icus-estimate', config={"displayModeBar": False}),
-                     dcc.Graph(figure=fig4, id='ventilators-estimate', config={"displayModeBar": False})])
+    html_div_children = [
+        html.Div([
+            html.Div([
+                html.Div('Hospital bed shortage likely on:',
+                    className='row', style=dict(fontWeight='bold', 
+                            textAlign='left', marginLeft='5%', fontSize=14)),
+                html.Div(str(date_crossed2), className='row',
+                    style={'color':'red', 'font-size':24, 'text-align':'left', 'margin-left':'5%'}),
+            ], className='four columns'),
+            html.Div([
+                html.Div('ICU shortage likely on:',
+                    className='row', style=dict(fontWeight='bold',
+                            textAlign='center', fontSize=14)),
+                html.Div(str(date_crossed3), className='row',
+                    style={'color':'red', 'font-size':24, 'text-align':'center'}),
+            ], className='four columns'),
+            html.Div([
+                html.Div('Ventilator shortage likely on:',
+                    className='row', style=dict(fontWeight='bold',
+                            textAlign='right', marginRight='7%', fontSize=14)),
+                html.Div(str(date_crossed3), className='row',
+                    style={'color':'red', 'font-size':24, 'text-align':'right', 'margin-right':'7%'}),
+            ], className='four columns'),
+        ], className='row'),
+        html.Div([
+            html.Div([
+                dcc.Graph(figure=fig1, id='totals-estimate',
+                    config={"displayModeBar": False})
+            ], className='six columns'),
+            html.Div([
+                dcc.Graph(figure=fig2, id='hospitalizations-estimate',
+                    config={"displayModeBar": False})
+            ], className='six columns'),
+        ], className='row'),
+        html.Div([
+            html.Div([
+                dcc.Graph(figure=fig3, id='icus-estimate',
+                    config={"displayModeBar": False})
+            ], className='six columns'),
+            html.Div([
+                dcc.Graph(figure=fig4, id='ventilators-estimate',
+                    config={"displayModeBar": False})
+            ], className='six columns'),
+        ], className='row'),
+    ]
+    return html_div_children
 
 if __name__ == '__main__':
     app.run_server(debug=False)
