@@ -22,13 +22,13 @@ app.layout = html.Div([
                         style={'margin-bottom': 3, 'font-weight': 'bold'}),
                 dcc.Input(
                         id="total-deaths", type="number",
-                        debounce=False, value=1, min=1, max=100000),
+                        debounce=False, value=2, min=1, max=100000),
                 html.Div('Fatality rate (%):',
                         style={'margin-bottom': 3, 'margin-top': 15,
                             'font-weight': 'bold'}),
                 dcc.Input(
                         id="fatality-rate", type="number",
-                        debounce=False, value=2, min=0.1, max=100),
+                        debounce=False, value=5, min=0.1, max=100),
                 html.Div('Days from infection to death:',
                         style={'margin-bottom': 3, 'margin-top': 15,
                             'font-weight': 'bold'}),
@@ -51,13 +51,13 @@ app.layout = html.Div([
                             'font-weight': 'bold'}),
                 dcc.Input(
                         id="num-icus", type="number",
-                        debounce=False, value=5000, min=1, max=500000),
+                        debounce=False, value=10000, min=1, max=500000),
                 html.Div('Ventilators capacity:',
                         style={'margin-bottom': 3, 'margin-top': 15,
                             'font-weight': 'bold'}),
                 dcc.Input(
                         id="num-ventilators", type="number",
-                        debounce=False, value=500, min=1, max=100000),
+                        debounce=False, value=1000, min=1, max=100000),
                 html.Div('% of cases requiring hospitalization:',
                         style={'margin-bottom': 3, 'margin-top': 15,
                             'font-weight': 'bold'}),
@@ -126,7 +126,7 @@ def calc_metrics(total_deaths, fatality_rate, days_death, doubling_time):
 
 def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
                         bar_name, line_name, chart_title):
-    num_cases_list = [case_factor*i for i in true_cases_list]
+    num_cases_list = [round(case_factor*i) for i in true_cases_list]
     lag_dates_list = [i+timedelta(10) for i in dates_list]
     num_cases_arr = np.array(num_cases_list)
     num_new_cases_arr = np.array(num_cases_list[1:]+[0]) - num_cases_arr
@@ -238,9 +238,13 @@ def update_calc_table(n_clicks, total_deaths, fatality_rate,
      State('num-beds', 'value'),
      State('num-icus', 'value'),
      State('num-ventilators', 'value'),
-     State('sim-days', 'value')])
+     State('sim-days', 'value'),
+     State('pct-hospitalization', 'value'),
+     State('pct-icu', 'value'),
+     State('pct-ventilator', 'value')])
 def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doubling_time,
-                        num_beds, num_icus, num_ventilators, sim_days):
+                        num_beds, num_icus, num_ventilators, sim_days,
+                        pct_hospitalization, pct_icu, pct_ventilator):
     number_cases_causing_death, \
     number_times_cases_doubled, \
     true_cases_today = \
@@ -273,17 +277,17 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
                    transition={'duration': 1000},
                    margin=dict(l=50,r=30,b=50,t=90))
 
-    fig2, date_crossed2 = plot_barline_combo(0.2, true_cases_list, dates_list, num_beds,
+    fig2, date_crossed2 = plot_barline_combo(pct_hospitalization/100, true_cases_list, dates_list, num_beds,
                             'Estimated number of hospitalizations needed',
                             'Hospital beds capacity',
                             'Estimation of number of cases requiring hospitalization<br>(assuming on average 20% require hospitalization<br>10 days after infection)')
 
-    fig3, date_crossed3 = plot_barline_combo(0.05, true_cases_list, dates_list, num_icus,
+    fig3, date_crossed3 = plot_barline_combo(pct_icu/100, true_cases_list, dates_list, num_icus,
                             'Estimated number of ICUs needed',
                             'ICU capacity',
                             'Estimation of number of cases requiring ICUs<br>(assuming on average 5% require ICU<br>10 days after infection)')
 
-    fig4, date_crossed4 = plot_barline_combo(0.01, true_cases_list, dates_list, num_ventilators,
+    fig4, date_crossed4 = plot_barline_combo(pct_ventilator/100, true_cases_list, dates_list, num_ventilators,
                             'Estimated number of ventilators needed',
                             'Ventilators capacity',
                             'Estimation of number of cases requiring Ventilators<br>(assuming on average 1% require ventilators<br>10 days after infection)')
@@ -308,7 +312,7 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
                 html.Div('Ventilator shortage likely on:',
                     className='row', style=dict(fontWeight='bold',
                             textAlign='right', marginRight='7%', fontSize=14)),
-                html.Div(str(date_crossed3), className='row',
+                html.Div(str(date_crossed4), className='row',
                     style={'color':'red', 'font-size':24, 'text-align':'right', 'margin-right':'7%'}),
             ], className='four columns'),
         ], className='row'),
