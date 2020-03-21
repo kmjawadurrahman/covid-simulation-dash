@@ -116,9 +116,15 @@ def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
     num_new_cases_arr = np.append(num_new_cases_arr[:-1], num_new_cases_arr[-1])
     num_cases_arr[10:] = num_cases_arr[10:] - num_new_cases_arr[:-10]
     bar_colors_list = ['#636efa' for _ in range(len(lag_dates_list))]
+    crossed_indicator = False
+    date_crossed = ""
     for bar_idx in range(len(lag_dates_list)):
         if num_cases_arr[bar_idx] > num_capacity:
             bar_colors_list[bar_idx] = '#db1313'
+            if not crossed_indicator:
+                date_crossed = lag_dates_list[bar_idx]
+                crossed_indicator = True
+
     fig = go.Figure()
     fig.add_trace(
         go.Bar(
@@ -141,6 +147,13 @@ def plot_barline_combo(case_factor, true_cases_list, dates_list, num_capacity,
                                   text='{} = {}'.format(line_name, num_capacity),
                                   font=dict(family='Arial',
                                             size=16),
+                                  showarrow=False))
+    annotations.append(dict(xref='paper', x=0.60, y=0,
+                                  xanchor='right', yanchor='top',
+                                  text='{} likely to hit limit on: {}'.format(line_name, str(date_crossed)),
+                                  font=dict(family='Arial',
+                                            size=16,
+                                            color='red'),
                                   showarrow=False))
     fig.update_layout(title=chart_title,
                    yaxis_title=bar_name,
