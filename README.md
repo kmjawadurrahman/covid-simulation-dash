@@ -1,13 +1,23 @@
 # Covid-19 Simulation using Dash
 
-Demo deployed at https://data-rnd-218011.appspot.com/
-
 ### Application in action:
 ![Covid Simulation Dash App Demo](demo.gif)
 
 ### Setup
 
-Create a python virtual environment and run `pip install -r requirements.txt`
+Create a python virtual environment and run
+
+```bash
+$ pip install -r requirements.txt
+```
+
+### Run application
+
+```bash
+$ python main.py
+```
+
+The application is now running locally at http://127.0.0.1:8050/
 
 ### Notes:
 - This simulation is based on the analysis done in this article: [Link](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca).
