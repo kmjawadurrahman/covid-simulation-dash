@@ -9,9 +9,8 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-external_stylesheets = ['https://storage.googleapis.com/sql_database_towhid/dash.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__)
 server = app.server
 
 app.layout = html.Div([
@@ -298,7 +297,7 @@ def update_bar_charts(n_clicks, total_deaths, fatality_rate, days_death, doublin
         html.Div([
             html.Div([
                 html.Div('Hospital bed shortage likely on:',
-                    className='row', style=dict(fontWeight='bold', 
+                    className='row', style=dict(fontWeight='bold',
                             textAlign='left', marginLeft='5%', fontSize=14)),
                 html.Div(str(date_crossed2), className='row',
                     style={'color':'red', 'font-size':24, 'text-align':'left', 'margin-left':'5%'}),
