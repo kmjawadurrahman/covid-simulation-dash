@@ -3,6 +3,8 @@
 ### Application in action:
 ![Covid Simulation Dash App Demo](demo.gif)
 
+YouTube link: https://youtu.be/l2GsTlZQCU0
+
 ### Setup
 
 Create a python3 virtual environment and run
