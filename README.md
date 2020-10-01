@@ -5,7 +5,7 @@
 
 ### Setup
 
-Create a python virtual environment and run
+Create a python3 virtual environment and run
 
 ```bash
 $ pip install -r requirements.txt
